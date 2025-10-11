@@ -408,7 +408,7 @@ h1::after {
         position: fixed;
         bottom: 0;
         width: 50%;
-        height: 20%;
+        height: 8%;
         z-index: 100;
     }
 
