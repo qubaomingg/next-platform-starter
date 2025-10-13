@@ -9,18 +9,17 @@ export default function Page() {
     const [lightboxImage, setLightboxImage] = useState('');
     const [isBlurred, setIsBlurred] = useState(false);
     const [showMobileHint, setShowMobileHint] = useState(false);
+    const [touchStartY, setTouchStartY] = useState(null);
+    const [touchEndY, setTouchEndY] = useState(null);
     const totalSlides = 7;
 
-    const showSlide = (index) => {
-        setCurrentSlide(index);
-    };
 
     const nextSlide = () => {
-        setCurrentSlide((prev) => (prev + 1) % totalSlides);
+        setCurrentSlide((prev) => Math.min(prev + 1, totalSlides - 1));
     };
 
     const prevSlide = () => {
-        setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+        setCurrentSlide((prev) => Math.max(prev - 1, 0));
     };
 
     useEffect(() => {
@@ -50,6 +49,29 @@ export default function Page() {
         };
     }, []);
 
+    const handleTouchStart = (e) => {
+        setTouchStartY(e.touches[0].clientY);
+        setTouchEndY(null); // Reset endY on new touch
+    };
+
+    const handleTouchMove = (e) => {
+        setTouchEndY(e.touches[0].clientY);
+    };
+
+    const handleTouchEnd = () => {
+        if (touchStartY === null || touchEndY === null) {
+            return;
+        }
+        const deltaY = touchStartY - touchEndY;
+        if (deltaY > 50) {
+            nextSlide();
+        } else if (deltaY < -50) {
+            prevSlide();
+        }
+        setTouchStartY(null);
+        setTouchEndY(null);
+    };
+
     const handleImageClick = (e) => {
         setLightboxImage(e.target.src);
         setLightboxVisible(true);
@@ -61,9 +83,9 @@ export default function Page() {
         setLightboxImage('');
         setIsBlurred(false);
     };
-
+    console.log(currentSlide);
     return (
-        <div>
+        <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
             <div className={isBlurred ? 'blur-background' : ''}>
                 <div id="slide1" className={`slide ${currentSlide === 0 ? 'active' : ''}`}>
                     <div className="title-container">
@@ -198,7 +220,7 @@ export default function Page() {
                     <img id="lightbox-img" src={lightboxImage} />
                 </div>
             )}
-            {showMobileHint && <div className="mobile-hint">点击屏幕左右下角切换</div>}
+            {showMobileHint && <div className="mobile-hint">左右点击或上下滑动切换</div>}
             <div className="mobile-nav-left" onClick={prevSlide}></div>
             <div className="mobile-nav-right" onClick={nextSlide}></div>
         </div>

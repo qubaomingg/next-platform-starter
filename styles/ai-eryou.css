@@ -407,8 +407,8 @@ h1::after {
         display: block;
         position: fixed;
         bottom: 0;
-        width: 50%;
-        height: 8%;
+        width: 10%;
+        height: 100%;
         z-index: 100;
     }
 
@@ -431,6 +431,7 @@ h1::after {
         padding: 10px 20px;
         border-radius: 10px;
         z-index: 101;
+        font-size: 3vw;
         animation: fadeOut 5s forwards;
     }
 
