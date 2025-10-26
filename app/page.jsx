@@ -150,7 +150,7 @@ export default function Page() {
                                     <source src="/assets/smart-creation-paw-patrol.webm" type="video/webm" />
                                 </video>
                                 <video controls loop poster="/assets/poster7.png">
-                                    <source src="/assets/ai-creation-interview.webm" type="video/webm" />
+                                    <source src="/assets/ai-wang.webm" type="video/webm" />
                                 </video>
                             </div>
                         </div>
@@ -211,7 +211,7 @@ export default function Page() {
                         <div className="heart"></div>
                         <div className="heart"></div>
                         <div className="heart"></div>
-                        <h1>认识小三班的新同学-小白</h1>
+                        <h1>小三班的新同学-萤石同学</h1>
                     </div>
                 </div>
             </div>
